@@ -16,17 +16,13 @@ public class CalculationHistoryController {
     private final CalculationHistoryService historyService;
 
     @GetMapping
-    public List<CalculationHistoryDTO> getAllHistory() {
+    public List<CalculationHistoryDTO> getHistory(@RequestParam(required = false) String userId) {
         return historyService
                 .getAllHistory()
                 .stream()
                 .map(this::mapCalculationHistory)
+                .filter(dto -> userId == null || dto.getUserId().equals(userId))
                 .toList();
-    }
-
-    @GetMapping("/{id}")
-    public CalculationHistoryDTO getHistoryById(@PathVariable String id) {
-        return mapCalculationHistory(historyService.getHistoryById(id));
     }
 
     @PostMapping

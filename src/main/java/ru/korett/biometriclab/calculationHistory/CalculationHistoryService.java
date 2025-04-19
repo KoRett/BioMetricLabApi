@@ -3,7 +3,9 @@ package ru.korett.biometriclab.calculationHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.korett.biometriclab.parameter.Parameter;
+import ru.korett.biometriclab.parameter.ParameterRepository;
 import ru.korett.biometriclab.user.User;
+import ru.korett.biometriclab.user.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public class CalculationHistoryService {
 
     private final CalculationHistoryRepository historyRepository;
+    private final UserRepository userRepository;
+    private final ParameterRepository parameterRepository;
 
     public List<CalculationHistory> getAllHistory() {
         return historyRepository.findAll();
@@ -26,12 +30,15 @@ public class CalculationHistoryService {
     }
 
     public CalculationHistory createHistory(CalculationHistoryCreateDTO dto) {
+        User user = userRepository.findById(dto.getUserId()).orElseThrow();
+        Parameter parameter = parameterRepository.findById(dto.getParameterId()).orElseThrow();
+
         CalculationHistory history = CalculationHistory.builder()
                 .temperature(dto.getTemperature())
                 .result(dto.getResult())
                 .date(LocalDateTime.now())
-                .user(User.builder().id(dto.getUserId()).build())
-                .parameter(Parameter.builder().id(dto.getParameterId()).build())
+                .user(user)
+                .parameter(parameter)
                 .build();
 
         return historyRepository.save(history);

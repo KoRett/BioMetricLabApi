@@ -16,18 +16,33 @@ public class CalculationHistoryController {
     private final CalculationHistoryService historyService;
 
     @GetMapping
-    public List<CalculationHistory> getAllHistory() {
-        return historyService.getAllHistory();
+    public List<CalculationHistoryDTO> getAllHistory() {
+        return historyService
+                .getAllHistory()
+                .stream()
+                .map(this::mapCalculationHistory)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public CalculationHistory getHistoryById(@PathVariable String id) {
-        return historyService.getHistoryById(id);
+    public CalculationHistoryDTO getHistoryById(@PathVariable String id) {
+        return mapCalculationHistory(historyService.getHistoryById(id));
     }
 
     @PostMapping
-    public CalculationHistory createHistory(@RequestBody CalculationHistoryCreateDTO dto) {
-        return historyService.createHistory(dto);
+    public CalculationHistoryDTO createHistory(@RequestBody CalculationHistoryCreateDTO dto) {
+        return mapCalculationHistory(historyService.createHistory(dto));
+    }
+
+    private CalculationHistoryDTO mapCalculationHistory(CalculationHistory calculationHistory) {
+        return CalculationHistoryDTO.builder()
+                .id(calculationHistory.getId())
+                .result(calculationHistory.getResult())
+                .temperature(calculationHistory.getTemperature())
+                .date(calculationHistory.getDate())
+                .userId(calculationHistory.getUser().getId())
+                .parameterId(calculationHistory.getParameter().getId())
+                .build();
     }
 
     @DeleteMapping("/{id}")

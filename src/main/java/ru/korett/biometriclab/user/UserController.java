@@ -24,8 +24,7 @@ public class UserController {
         return UserDTO.builder()
                 .UUID(user.getId())
                 .email(user.getEmail())
-                .role(UserDTO.Role
-                        .mapFromDb(user.getUserRole().getRole())
-                ).build();
+                .role(UserDTO.Role.mapFromDb(user.getUserRole().getRole()))
+                .build();
     }
 }

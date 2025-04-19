@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.korett.biometriclab.calculationHistory.CalculationHistory;
 import ru.korett.biometriclab.user.role.UserRole;
 
 import java.util.Collection;
@@ -36,6 +37,9 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private UserRole userRole;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CalculationHistory> calculationHistories;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

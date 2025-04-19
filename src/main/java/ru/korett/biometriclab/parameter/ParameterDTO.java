@@ -17,5 +17,5 @@ public class ParameterDTO {
     private String name;
     private String description;
     private String formula;
-    private Integer accuracyPercentage;
+    private Float accuracyPercentage;
 }

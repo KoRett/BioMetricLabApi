@@ -16,30 +16,48 @@ public class ParameterController {
     private final ParameterService parameterService;
 
     @GetMapping
-    public List<Parameter> getAllParameters() {
-        return parameterService.getAllParameters();
+    public List<ParameterDTO> getAllParameters() {
+        return parameterService
+                .getAllParameters()
+                .stream()
+                .map(this::mapParameter)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Parameter getParameterById(@PathVariable String id) {
-        return parameterService.getParameterById(id);
+    public ParameterDTO getParameterById(@PathVariable String id) {
+        return mapParameter(parameterService.getParameterById(id));
     }
 
     @PostMapping
-    public Parameter createParameter(@RequestBody ParameterCreateDTO dto) {
+    public ParameterDTO createParameter(@RequestBody ParameterCreateDTO dto) {
         Parameter parameter = Parameter.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .formula(dto.getFormula())
                 .accuracyPercentage(dto.getAccuracyPercentage())
                 .build();
-        return parameterService.saveParameter(parameter);
+        return mapParameter(parameterService.saveParameter(parameter));
     }
 
     @PutMapping("/{id}")
-    public Parameter updateParameter(@PathVariable String id, @RequestBody Parameter parameter) {
-        parameter.setId(id);
-        return parameterService.saveParameter(parameter);
+    public ParameterDTO updateParameter(@PathVariable String id, @RequestBody ParameterCreateDTO dto) {
+        Parameter parameter = parameterService.getParameterById(id);
+        parameter.setName(dto.getName());
+        parameter.setFormula(dto.getFormula());
+        parameter.setDescription(dto.getDescription());
+        parameter.setAccuracyPercentage(dto.getAccuracyPercentage());
+        return mapParameter(parameterService.saveParameter(parameter));
+    }
+
+    private ParameterDTO mapParameter(Parameter parameter) {
+        return ParameterDTO.builder()
+                .id(parameter.getId())
+                .name(parameter.getName())
+                .formula(parameter.getFormula())
+                .accuracyPercentage(parameter.getAccuracyPercentage())
+                .description(parameter.getDescription())
+                .build();
     }
 
     @DeleteMapping("/{id}")

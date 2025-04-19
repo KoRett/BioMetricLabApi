@@ -19,14 +19,13 @@ public class UserController {
 
     @Operation(summary = "Получение данных авторизованного пользователя")
     @GetMapping("/me")
-    public UserDataResponse getData() {
+    public UserDTO getData() {
         User user = userService.getCurrentUser();
-        return UserDataResponse.builder()
+        return UserDTO.builder()
                 .UUID(user.getId())
                 .email(user.getEmail())
-                .role(UserDataResponse.Role
+                .role(UserDTO.Role
                         .mapFromDb(user.getUserRole().getRole())
                 ).build();
     }
-
 }

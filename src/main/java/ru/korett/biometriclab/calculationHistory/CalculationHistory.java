@@ -26,8 +26,8 @@ public class CalculationHistory {
     @Column(name = "temperature")
     private Float temperature;
 
-    @Column(name = "result")
-    private Float result;
+    @Column(name = "variable")
+    private Float variable;
 
     @Column(name = "date")
     private LocalDateTime date;

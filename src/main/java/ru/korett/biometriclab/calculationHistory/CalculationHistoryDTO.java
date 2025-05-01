@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CalculationHistoryDTO {
     private String id;
-    private Float temperature;
     private Float result;
+    private Float variable;
     private LocalDateTime date;
     private String userId;
     private String parameterId;

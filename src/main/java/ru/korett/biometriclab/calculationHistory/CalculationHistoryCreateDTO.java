@@ -7,8 +7,8 @@ import lombok.Data;
  */
 @Data
 public class CalculationHistoryCreateDTO {
-    private Float temperature;
     private Float result;
+    private Float variable;
     private String userId;
     private String parameterId;
 }

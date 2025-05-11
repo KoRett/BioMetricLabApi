@@ -34,7 +34,7 @@ public class CalculationHistoryService {
         Parameter parameter = parameterRepository.findById(dto.getParameterId()).orElseThrow();
 
         CalculationHistory history = CalculationHistory.builder()
-                .temperature(dto.getResult())
+                .result(dto.getResult())
                 .variable(dto.getVariable())
                 .date(LocalDateTime.now())
                 .user(user)

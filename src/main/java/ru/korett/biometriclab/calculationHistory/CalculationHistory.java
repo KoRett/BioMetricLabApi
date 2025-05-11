@@ -23,8 +23,8 @@ public class CalculationHistory {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "temperature")
-    private Float temperature;
+    @Column(name = "result")
+    private Float result;
 
     @Column(name = "variable")
     private Float variable;

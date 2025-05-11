@@ -38,7 +38,7 @@ public class CalculationHistoryController {
         return CalculationHistoryDTO.builder()
                 .id(calculationHistory.getId())
                 .variable(calculationHistory.getVariable())
-                .result(calculationHistory.getTemperature())
+                .result(calculationHistory.getResult())
                 .date(calculationHistory.getDate())
                 .userId(calculationHistory.getUser().getId())
                 .parameterId(calculationHistory.getParameter().getId())

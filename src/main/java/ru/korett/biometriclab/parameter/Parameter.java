@@ -31,7 +31,7 @@ public class Parameter {
     @Column(name = "formula", length = 100)
     private String formula;
 
-    @Column(name = "accuracy_percentage", length = 100)
+    @Column(name = "accuracy_percentage")
     private Float accuracyPercentage;
 
     @OneToMany(mappedBy = "parameter", cascade = CascadeType.ALL)
